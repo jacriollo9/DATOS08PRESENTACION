@@ -170,7 +170,7 @@ elif section == "Filtrado de jugadores más complejos":
     countries = st.multiselect("Seleccionar país(es) de origen", options=df2['Nationality'].unique(), key='country-filter')
 
     # Filtrar por valor de jugador
-    min_value, max_value = st.slider("Rango de Valor del
+    min_value, max_value = st.slider("R
 
         # Filtrar por valor de jugador
     min_value, max_value = st.slider("Rango de Valor del Jugador", int(df2['Value'].min()), int(df2['Value'].max()), (0, int(df2['Value'].max() / 2)))

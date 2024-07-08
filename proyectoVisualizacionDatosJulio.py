@@ -4,7 +4,8 @@ import plotly.figure_factory as ff
 import streamlit as st
 import numpy as np
 
-# Cargar el dataset filtrado usando una ruta relativa
+
+# Cargar el dataset filtrado
 df2 = pd.read_csv('FilteredDataset.csv')
 
 # Aplicar la conversión a las columnas 'Value' y 'Wage'
@@ -170,9 +171,6 @@ elif section == "Filtrado de jugadores más complejos":
     countries = st.multiselect("Seleccionar país(es) de origen", options=df2['Nationality'].unique(), key='country-filter')
 
     # Filtrar por valor de jugador
-    min_value, max_value = st.slider("R
-
-        # Filtrar por valor de jugador
     min_value, max_value = st.slider("Rango de Valor del Jugador", int(df2['Value'].min()), int(df2['Value'].max()), (0, int(df2['Value'].max() / 2)))
 
     # Filtrar por posición
@@ -248,15 +246,13 @@ elif section == "Estadísticas adicionales":
     st.plotly_chart(fig_hist_age, use_container_width=True)
 
     # Gráfico 3D de dispersión para comparar Valor vs Edad vs Habilidad seleccionada
-    skill_columns_spanish_sample = skill_columns_spanish[:6]  # Muestra de habilidades para el gráfico 3D
-    st.subheader(f"Comparación 3D de Valor, Edad y Habilidades Seleccionadas")
-    for skill_spanish in skill_columns_spanish_sample:
-        skill_eng = [k for k, v in skill_translation.items() if v == skill_spanish][0]
-        fig_scatter_3d = px.scatter_3d(df2, x='Age', y='Value', z=skill_eng,
+    if skill_columns_spanish:
+        st.subheader(f"Comparación 3D de Valor, Edad y {skill_columns_spanish}")
+        fig_scatter_3d = px.scatter_3d(df2, x='Age', y='Value', z=skill_columns_spanish,
                                        color='Nationality', size='Value',
                                        hover_name='Name', opacity=0.7,
-                                       title=f'Comparación 3D de Valor, Edad y {skill_spanish}',
-                                       labels={'Age': 'Edad', 'Value': 'Valor del Jugador', skill_eng: skill_spanish, 'Nationality': 'Nacionalidad'})
+                                       title=f'Comparación 3D de Valor, Edad y {skill_columns_spanish}',
+                                       labels={'Age': 'Edad', 'Value': 'Valor del Jugador', 'Nationality': 'Nacionalidad'})
         st.plotly_chart(fig_scatter_3d, use_container_width=True)
 
 # Detalles del jugador seleccionado
@@ -271,8 +267,3 @@ if click_data:
     st.write(f"### {player_name}")
     st.write(f"Nacionalidad: {player_info['Nationality']}")
     st.write(f"Valor: €{player_info['Value']:,.0f}")
-    st.write(f"Wage: €{player_info['Wage']:,.0f}")
-    st.write(f"Edad: {player_info['Age']}")
-    st.write("**Habilidades:**")
-    for skill_eng, skill_spanish in skill_translation.items():
-        st.write(f"{skill_spanish}: {player_info[skill_eng]}")

@@ -6,7 +6,7 @@ import numpy as np
 
 
 # Cargar el dataset filtrado
-df2 = pd.read_csv('C:/Users/josep/Downloads/New Folder/FilteredDataset.csv')
+df2 = pd.read_csv('FilteredDataset.csv')
 
 # Aplicar la conversión a las columnas 'Value' y 'Wage'
 def value_to_numeric(value):

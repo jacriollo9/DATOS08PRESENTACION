@@ -4,6 +4,7 @@ import plotly.figure_factory as ff
 import streamlit as st
 import numpy as np
 
+
 # Cargar el dataset filtrado
 df2 = pd.read_csv('C:/Users/josep/Downloads/New Folder/FilteredDataset.csv')
 
